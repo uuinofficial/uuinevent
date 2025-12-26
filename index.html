@@ -84,11 +84,21 @@
         }
         .progress-fill { height: 100%; background: #333; transition: width 0.4s ease; }
 
+        /* 修改：維持直式比例 (3:4.5) 以符合雜誌感 */
+        .img-display-straight { 
+            width: 100%; 
+            aspect-ratio: 3 / 4.5; 
+            background: #f0f0f0; 
+            object-fit: cover; 
+            border-radius: 16px; 
+            margin-bottom: 1.25rem; 
+            display: block; 
+        }
+        
         .img-display { 
             width: 100%; 
             height: auto; 
-            /* 調整：原本是 4/5，現在改為更長、更具雜誌感的 3/4.5 */
-            aspect-ratio: 3 / 4.5; 
+            aspect-ratio: 3 / 4; 
             background: #f0f0f0; 
             object-fit: cover; 
             border-radius: 16px; 
@@ -125,21 +135,20 @@
 </head>
 <body class="bg-gradient">
     <div id="quiz-container" class="glass-card px-6 py-8 md:p-10 fade-in">
+
         <!-- 封面頁 -->
         <div id="start-page">
             <div class="text-center">
-                <h2 class="text-[10px] tracking-[0.2em] text-gray-400 mb-2 uppercase">UUIN Lifestyle Quiz</h2>
-                <h1 class="text-xl md:text-2xl font-bold leading-tight mb-4">探索你的 UUIN 生活風格！<br><span class="uuin-gold text-lg">開春新年指引</span></h1>
-                <img src="https://live.staticflickr.com/65535/55002358596_5b8b28a566_c.jpg" alt="[UUIN 形象圖]" class="img-display shadow-sm">
-                <div class="w-10 h-0.5 bg-black mx-auto mb-6"></div>
-                <!-- 調整：space-y-2 改為 space-y-1，mb-8 改為 mb-6 縮小間距 -->
-                <div class="text-gray-600 space-y-1 mb-6 text-sm px-2 leading-relaxed">
-                    <p>新的一年像是一場充滿驚喜的開始，</p>
+                <h2 class="text-[9px] tracking-[0.2em] text-gray-400 mb-1 uppercase">UUIN Lifestyle Quiz</h2>
+                <h1 class="text-xl font-bold leading-tight mb-3">探索你的 UUIN 生活風格！<br><span class="uuin-gold text-base">開春新年指引</span></h1>
+                <img src="https://live.staticflickr.com/65535/55002358596_5b8b28a566_c.jpg" alt="[UUIN 形象圖]" class="img-display-straight shadow-sm">
+                <div class="text-gray-600 space-y-1 mb-4 text-xs px-2 leading-relaxed">
+                   <p>新的一年像是一場充滿驚喜的開始，</p>
                     <p>揭開隱藏在你靈魂裡的風格角色！</p>
-                    <p class="pt-1 font-bold text-black text-base">完成測驗🎁<br>領取專屬新年穿搭與LINE抽獎。</p>
+                    <p class="pt-1 font-bold text-black text-base">完成測驗🎁<br>領取專屬新年穿搭與LINE抽獎。</p> 
                 </div>
-                <button onclick="startQuiz()" class="w-full bg-black text-white py-4 rounded-full tracking-widest font-bold hover:opacity-90 active:scale-95 transition shadow-lg text-sm mb-6">點我開始測驗 ▸</button>
-                <div class="text-center text-[10px] text-gray-400 uppercase tracking-tighter">&copy; UUIN Taiwan All Rights Reserved.</div>
+                <button onclick="startQuiz()" class="w-full bg-black text-white py-3.5 rounded-full tracking-widest font-bold active:scale-95 transition shadow-lg text-sm mb-4">點我開始測驗 ▸</button>
+                <div class="text-center text-[9px] text-gray-400 uppercase tracking-tighter">© UUIN Taiwan All Rights Reserved.</div>
             </div>
         </div>
 

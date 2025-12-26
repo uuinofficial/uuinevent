@@ -87,7 +87,8 @@
         .img-display { 
             width: 100%; 
             height: auto; 
-            aspect-ratio: 4 / 5; /* 鎖定比例防止跑版 */
+            /* 調整：原本是 4/5，現在改為更長、更具雜誌感的 3/4.5 */
+            aspect-ratio: 3 / 4.5; 
             background: #f0f0f0; 
             object-fit: cover; 
             border-radius: 16px; 
@@ -129,12 +130,13 @@
             <div class="text-center">
                 <h2 class="text-[10px] tracking-[0.2em] text-gray-400 mb-2 uppercase">UUIN Lifestyle Quiz</h2>
                 <h1 class="text-xl md:text-2xl font-bold leading-tight mb-4">探索你的 UUIN 生活風格！<br><span class="uuin-gold text-lg">開春新年指引</span></h1>
-                <img src="https://live.staticflickr.com/65535/55002358596_5b8b28a566_c.jpg" alt="UUIN 形象圖" class="img-display shadow-sm">
+                <img src="https://live.staticflickr.com/65535/55002358596_5b8b28a566_c.jpg" alt="[UUIN 形象圖]" class="img-display shadow-sm">
                 <div class="w-10 h-0.5 bg-black mx-auto mb-6"></div>
-                <div class="text-gray-600 space-y-2 mb-8 text-sm px-2 leading-relaxed">
+                <!-- 調整：space-y-2 改為 space-y-1，mb-8 改為 mb-6 縮小間距 -->
+                <div class="text-gray-600 space-y-1 mb-6 text-sm px-2 leading-relaxed">
                     <p>新的一年像是一場充滿驚喜的開始，</p>
                     <p>揭開隱藏在你靈魂裡的風格角色！</p>
-                    <p class="pt-2 font-bold text-black text-base">完成測驗🎁<br>領取專屬新年穿搭與LINE抽獎。</p>
+                    <p class="pt-1 font-bold text-black text-base">完成測驗🎁<br>領取專屬新年穿搭與LINE抽獎。</p>
                 </div>
                 <button onclick="startQuiz()" class="w-full bg-black text-white py-4 rounded-full tracking-widest font-bold hover:opacity-90 active:scale-95 transition shadow-lg text-sm mb-6">點我開始測驗 ▸</button>
                 <div class="text-center text-[10px] text-gray-400 uppercase tracking-tighter">&copy; UUIN Taiwan All Rights Reserved.</div>
@@ -156,7 +158,7 @@
             <h2 class="text-[10px] tracking-[0.2em] text-gray-400 mb-1 uppercase">Your Aesthetic Soul</h2>
             <h1 id="result-title" class="text-2xl font-bold mb-1">時髦都會家</h1>
             <h3 id="result-subtitle" class="text-xs text-gray-400 italic mb-4">Confident Urbanite</h3>
-            <img id="result-img" src="" alt="測驗結果" class="img-display shadow-md">
+            <img id="result-img" src="" alt="[測驗結果圖]" class="img-display shadow-md">
             
             <div class="bg-white/60 p-5 rounded-2xl text-left mb-5 border border-white/50">
                 <h4 class="font-bold mb-2 text-[10px] border-b border-gray-200 pb-2 uppercase tracking-wider text-gray-400">風格靈魂</h4>
@@ -251,7 +253,7 @@
                     currentStep++; 
                     if (currentStep < quizData.length) {
                         showQuestion();
-                        window.scrollTo({ top: 0, behavior: 'smooth' }); // 切換題目自動回到頂部
+                        window.scrollTo({ top: 0, behavior: 'smooth' }); 
                     } else {
                         showResult();
                     }

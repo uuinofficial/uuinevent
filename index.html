@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>探索你的 UUIN 生活風格！：開春新年指引</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 解決安卓與 iOS 瀏覽器高度不一致的問題 */
+            --app-height: 100%;
+        }
+
+        body { 
+            font-family: 'Noto Sans TC', sans-serif; 
+            background: #f8f9fa; 
+            color: #333; 
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; 
+            -webkit-tap-highlight-color: transparent;
+            /* 確保在 iOS 有平滑捲動，在 Android 防止拉伸 */
+            overscroll-behavior-y: none;
+        }
+
+        .bg-gradient { 
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%); 
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        /* 核心卡片容器：針對不同手機寬度優化 */
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4); 
+            border-radius: 24px; 
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); 
+            width: 100%; 
+            max-width: 420px; 
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-option { 
+            transition: all 0.2s ease; 
+            border: 1px solid #e5e7eb; 
+            text-align: left; 
+            background: white; 
+            width: 100%;
+            display: block;
+            outline: none;
+        }
+
+        /* 安卓點擊效果優化 */
+        .btn-option:active { 
+            background: #333 !important; 
+            color: #fff !important; 
+            transform: scale(0.98); 
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .uuin-gold { color: #a68b5b; }
+        .bg-uuin-gold { background: #a68b5b; }
+
+        .progress-bar { 
+            height: 4px; 
+            background: #eee; 
+            width: 100%; 
+            border-radius: 2px; 
+            margin-bottom: 1.5rem; 
+            overflow: hidden; 
+        }
+        .progress-fill { height: 100%; background: #333; transition: width 0.4s ease; }
+
+        .img-display { 
+            width: 100%; 
+            height: auto; 
+            aspect-ratio: 4 / 5; /* 鎖定比例防止跑版 */
+            background: #f0f0f0; 
+            object-fit: cover; 
+            border-radius: 16px; 
+            margin-bottom: 1.25rem; 
+            display: block; 
+        }
+        
+        /* CTA 禮物盒區塊樣式 */
+        .cta-reward-box {
+            background: linear-gradient(135deg, #222 0%, #444 100%);
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(166, 139, 91, 0.3);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(166, 139, 91, 0.4); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(166, 139, 91, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(166, 139, 91, 0); }
+        }
+
+        /* 針對小螢幕手機的極致優化 */
+        @media (max-width: 360px) {
+            .glass-card { padding: 1.25rem !important; }
+            h1 { font-size: 1.15rem !important; }
+            .btn-option { padding: 0.75rem 1rem !important; font-size: 0.75rem !important; }
+        }
+    </style>
+</head>
+<body class="bg-gradient">
+    <div id="quiz-container" class="glass-card px-6 py-8 md:p-10 fade-in">
+        <!-- 封面頁 -->
+        <div id="start-page">
+            <div class="text-center">
+                <h2 class="text-[10px] tracking-[0.2em] text-gray-400 mb-2 uppercase">UUIN Lifestyle Quiz</h2>
+                <h1 class="text-xl md:text-2xl font-bold leading-tight mb-4">探索你的 UUIN 生活風格！<br><span class="uuin-gold text-lg">開春新年指引</span></h1>
+                <img src="https://live.staticflickr.com/65535/55002358596_5b8b28a566_c.jpg" alt="UUIN 形象圖" class="img-display shadow-sm">
+                <div class="w-10 h-0.5 bg-black mx-auto mb-6"></div>
+                <div class="text-gray-600 space-y-2 mb-8 text-sm px-2 leading-relaxed">
+                    <p>新的一年像是一場充滿驚喜的開始，</p>
+                    <p>揭開隱藏在你靈魂裡的風格角色！</p>
+                    <p class="pt-2 font-bold text-black text-base">完成測驗🎁<br>領取專屬新年穿搭與LINE抽獎。</p>
+                </div>
+                <button onclick="startQuiz()" class="w-full bg-black text-white py-4 rounded-full tracking-widest font-bold hover:opacity-90 active:scale-95 transition shadow-lg text-sm mb-6">點我開始測驗 ▸</button>
+                <div class="text-center text-[10px] text-gray-400 uppercase tracking-tighter">&copy; UUIN Taiwan All Rights Reserved.</div>
+            </div>
+        </div>
+
+        <!-- 題目頁 -->
+        <div id="question-page" class="hidden">
+            <div class="progress-bar"><div id="progress-fill" class="progress-fill" style="width: 0%;"></div></div>
+            <div id="question-content">
+                <h3 id="question-number" class="text-[10px] text-gray-400 mb-3 tracking-widest uppercase">STEP 1 / 5</h3>
+                <h2 id="question-text" class="text-lg font-bold mb-6 leading-snug text-gray-800">問題文字載入中...</h2>
+                <div id="options-container" class="space-y-3"></div>
+            </div>
+        </div>
+
+        <!-- 結果頁 -->
+        <div id="result-page" class="hidden text-center">
+            <h2 class="text-[10px] tracking-[0.2em] text-gray-400 mb-1 uppercase">Your Aesthetic Soul</h2>
+            <h1 id="result-title" class="text-2xl font-bold mb-1">時髦都會家</h1>
+            <h3 id="result-subtitle" class="text-xs text-gray-400 italic mb-4">Confident Urbanite</h3>
+            <img id="result-img" src="" alt="測驗結果" class="img-display shadow-md">
+            
+            <div class="bg-white/60 p-5 rounded-2xl text-left mb-5 border border-white/50">
+                <h4 class="font-bold mb-2 text-[10px] border-b border-gray-200 pb-2 uppercase tracking-wider text-gray-400">風格靈魂</h4>
+                <p id="result-soul" class="text-xs md:text-sm text-gray-600 leading-relaxed"></p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <div class="bg-black text-white p-4 rounded-2xl flex flex-col justify-center text-left">
+                    <p class="text-[9px] uppercase opacity-60 mb-1">風格關鍵字</p>
+                    <p id="result-keywords" class="text-[11px] font-bold"></p>
+                </div>
+                <a id="result-link" href="#" target="_blank" class="bg-white p-4 rounded-2xl border border-gray-200 hover:border-black transition-colors flex flex-col justify-center text-left">
+                    <p class="text-[9px] uppercase text-gray-400 mb-1">推薦單品</p>
+                    <p id="result-items" class="text-[11px] font-bold underline decoration-dotted underline-offset-4"></p>
+                </a>
+            </div>
+
+            <!-- CTA 抽獎獎勵區塊 -->
+            <div class="cta-reward-box mb-8 text-white">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="bg-uuin-gold text-[9px] px-2 py-1 rounded text-white font-bold tracking-tighter">NEW YEAR GIFT</span>
+                    <span class="text-white/40 text-[9px]">Limited Time</span>
+                </div>
+                <h4 class="text-sm font-bold mb-1 text-left">恭喜完成測驗！🧧</h4>
+                <p class="text-[11px] text-white/70 text-left mb-4 leading-snug">
+                    感謝參與 UUIN 開春指引，<br>
+                    我們為您準備了專屬的新年抽獎好禮。
+                </p>
+                <a href="https://event.line.me/r/xQqZJRPw3DGpPFea/6LH3ch" target="_blank" class="block w-full bg-uuin-gold text-white py-3 rounded-full text-sm tracking-widest font-bold shadow-lg hover:brightness-110 active:scale-95 transition pulse-animation">
+                    立即領取 LINE 抽獎驚喜
+                </a>
+            </div>
+
+            <div class="text-left mb-6 px-1">
+                <h4 class="font-bold mb-1 text-xs uuin-gold">新年祝福</h4>
+                <p id="result-wish" class="text-[11px] italic text-gray-500"></p>
+            </div>
+
+            <div class="pt-4 border-t border-gray-100">
+                <button onclick="location.reload()" class="w-full text-gray-400 py-2 text-[11px] font-bold hover:text-black transition uppercase tracking-widest">↺ 重新測驗</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 動態計算高度，解決 Android 頂部/底部選單問題
+        const setAppHeight = () => {
+            const doc = document.documentElement;
+            doc.style.setProperty('--app-height', `${window.innerHeight}px`);
+        };
+        window.addEventListener('resize', setAppHeight);
+        setAppHeight();
+
+        const quizData = [
+            { q: "🏮Q1 大年初一，前往祕境茶屋走春，才剛走進林間，天空卻下起細雨，而你手上「完全沒帶傘」。這時你會...？", options: [{ text: "保持原本的步伐，繼續前往目的地，淋點小雨也很浪漫。", type: "A" }, { text: "走進轉角的獨立書店，翻閱攝影集，等候雨停了再出發。", type: "B" }, { text: "停下腳步欣賞美景，觀察雨滴落在地面上的漣漪。", type: "D" }, { text: "打開手機地圖，尋找附近可以借傘或買傘的小店。", type: "C" }] },
+            { q: "🏮Q2 抵達祕境茶屋坐定後，你意外透過落地窗，發現有一座半透明、反射著雨後微光的玻璃工坊，你會？", options: [{ text: "被工坊的獨特氣場吸引，喝完茶後起身前往探索。", type: "A" }, { text: "拍下門口的視覺識別，存進旅遊清單，規劃下次造訪。", type: "D" }, { text: "先上網查詢工坊，搜尋開放時間與了解歷史故事。", type: "C" }, { text: "隔著玻璃遠遠欣賞，繼續享受手邊的熱茶。", type: "B" }] },
+            { q: "🏮Q3 準備起身離開時，茶屋主理人突然拿出一組「新年感官盲盒」送給你，你會選擇？", options: [{ text: "立體幾何的設計圖樣，配色鮮明且具現代感。", type: "A" }, { text: "罩著半透明的霧面網紗，近看能發現底下的細膩織紋。", type: "D" }, { text: "柔軟親膚的棉麻小袋，散發著淡淡的天然草本香。", type: "B" }, { text: "用木頭打造的工藝盒，附上一張手寫的小卡。", type: "C" }] },
+            { q: "🏮Q4 坐在回程的列車上，你發現盲盒包裝裡襯著一張質感厚實、帶有草木碎屑的手工纖維卡。寫下的願望將會成真，你會寫下？", options: [{ text: "列出新年想要探索的深度清單或學習計畫。", type: "C" }, { text: "勾勒出明年的未來圖像，或是某個神祕符號。", type: "D" }, { text: "一句充滿能量、展現自我期許的座右銘。", type: "A" }, { text: "寫下「平安、順心、自在」願望，期許有美好的一年。", type: "B" }] },
+            { q: "🏮Q5 旅程結束回到家，當你靜下心回味今天這段特別的經歷，最讓你感到心滿意足的瞬間是？", options: [{ text: "沿路捕捉的美景照片，茶屋享用的精緻午茶，忍不住想跟朋友分享。", type: "A" }, { text: "在森林與茶屋體驗中，感覺身體被徹底放空、找回以往的鬆弛感。", type: "B" }, { text: "遇見有趣的職人故事，將這些見聞整理成深度的旅行回憶，寫成日記。", type: "C" }, { text: "意外發現的玻璃工坊，讓你對異材質的融合產生了新靈感，想深入研究。", type: "D" }] }
+        ];
+
+        const results = {
+            A: { title: "時髦都會家", subtitle: "Confident Urbanite", img: "https://live.staticflickr.com/65535/55002636403_18a2603703_c.jpg", soul: "你是天生的風格主導者，自信且目標明確，喜歡在人群中展現獨特的自我價值。", keywords: "俐落、氣場、自信", items: "挺版丹寧西裝外套", link: "https://uuin.com.tw/products/2524071-88", wish: "願新的一年，你的靈感始終站在潮流前端，步履優雅，自信綻放！" },
+            B: { title: "慵懶漫遊家", subtitle: "Effortless Wanderer", img: "https://live.staticflickr.com/65535/55002645343_2f199c907c_c.jpg", soul: "你是感官的導航者，懂得與空間、物件溫柔對話。追求身心平衡，舒適才是最高級的時髦。", keywords: "輕盈、自在、天然", items: "粉麻連袖洋裝", link: "https://uuin.com.tw/products/2315052-11", wish: "願新的一年，日子如詩般輕盈，願你在每一個鬆弛的瞬間，遇見最心安的風景。" },
+            C: { title: "全能探險家", subtitle: "Versatile Explorer", img: "https://live.staticflickr.com/65535/55002649123_6a61f9fd45_c.jpg", soul: "你是理性與深度兼備的觀察者。欣賞有邏輯的設計，對你來說，好物要禁得起時間考驗。", keywords: "機能、知性、品質", items: "純色多口袋風衣外套", link: "https://uuin.com.tw/products/2424042-58", wish: "願新的一年，所有的規劃皆如期達成，完美應對你精彩豐富的探索生活。" },
+            D: { title: "風格魔法師", subtitle: "Creative Visionary", img: "https://live.staticflickr.com/65535/55002652508_f731e77da1_c.jpg", soul: "你是細節的搜集者，擅長在平凡中挖掘不凡。擁有審美天賦，生活就是最重要的創作媒材。", keywords: "靈感、藝術、工藝", items: "針葉針織落肩上衣", link: "https://uuin.com.tw/products/2423131-95", wish: "願新的一年，你的視角依然繽紛。即便是在日常的角落，也能被你翻玩成藝術瞬間。" }
+        };
+
+        let currentStep = 0, scores = { A: 0, B: 0, C: 0, D: 0 };
+
+        function startQuiz() { 
+            document.getElementById('start-page').classList.add('hidden'); 
+            document.getElementById('question-page').classList.remove('hidden'); 
+            showQuestion(); 
+        }
+
+        function showQuestion() {
+            const data = quizData[currentStep];
+            document.getElementById('question-number').innerText = `STEP ${currentStep + 1} / ${quizData.length}`;
+            document.getElementById('question-text').innerText = data.q;
+            document.getElementById('progress-fill').style.width = `${((currentStep) / quizData.length) * 100}%`;
+            
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            data.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-4 rounded-2xl btn-option text-[11px] md:text-sm leading-snug shadow-sm";
+                btn.innerText = opt.text;
+                btn.onclick = () => { 
+                    scores[opt.type]++; 
+                    currentStep++; 
+                    if (currentStep < quizData.length) {
+                        showQuestion();
+                        window.scrollTo({ top: 0, behavior: 'smooth' }); // 切換題目自動回到頂部
+                    } else {
+                        showResult();
+                    }
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        function showResult() {
+            document.getElementById('question-page').classList.add('hidden');
+            const resPage = document.getElementById('result-page');
+            resPage.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            let topType = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            const res = results[topType];
+            
+            document.getElementById('result-title').innerText = res.title;
+            document.getElementById('result-subtitle').innerText = res.subtitle;
+            document.getElementById('result-img').src = res.img;
+            document.getElementById('result-soul').innerText = res.soul;
+            document.getElementById('result-keywords').innerText = res.keywords;
+            document.getElementById('result-items').innerText = res.items;
+            document.getElementById('result-link').href = res.link;
+            document.getElementById('result-wish').innerText = res.wish;
+        }
+    </script>
+</body>
+</html>

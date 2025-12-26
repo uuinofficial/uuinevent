@@ -84,7 +84,7 @@
         }
         .progress-fill { height: 100%; background: #333; transition: width 0.4s ease; }
 
-        /* 修改：維持直式比例 (3:4.5) 以符合雜誌感 */
+        /* 封面圖比例 */
         .img-display-straight { 
             width: 100%; 
             aspect-ratio: 3 / 4.5; 
@@ -95,14 +95,15 @@
             display: block; 
         }
         
+        /* 結果頁圖片比例與間距調整區塊 */
         .img-display { 
             width: 100%; 
             height: auto; 
-            aspect-ratio: 3 / 4; 
+            aspect-ratio: 3 / 4; /* 修改：將比例調為 3:4，稍微變方一點點 */
             background: #f0f0f0; 
             object-fit: cover; 
             border-radius: 16px; 
-            margin-bottom: 1.25rem; 
+            margin-bottom: 0.75rem; /* 修改：間距從 1.25rem 縮小至 0.75rem (12px) */
             display: block; 
         }
         
@@ -213,7 +214,6 @@
     </div>
 
     <script>
-        // 動態計算高度，解決 Android 頂部/底部選單問題
         const setAppHeight = () => {
             const doc = document.documentElement;
             doc.style.setProperty('--app-height', `${window.innerHeight}px`);

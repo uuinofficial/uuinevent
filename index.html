@@ -189,7 +189,7 @@
                     感謝參與 UUIN 開春指引，<br>
                     我們為您準備了專屬的新年抽獎好禮。
                 </p>
-                <!-- 調用更新後的跳轉邏輯 -->
+                <!-- 修改為最保險的跳轉 -->
                 <button onclick="handleLineRedirect()" class="block w-full bg-uuin-gold text-white py-3 rounded-full text-sm tracking-widest font-bold shadow-lg hover:brightness-110 active:scale-95 transition pulse-animation">
                     立即領取 LINE 抽獎驚喜
                 </button>
@@ -214,22 +214,19 @@
         window.addEventListener('resize', setAppHeight);
         setAppHeight();
 
-        // 核心：修復跳轉逻辑，使用您提供的新活動網址
+        // 改回原始網址，並增加環境判斷
         function handleLineRedirect() {
-            // 使用 LIFF 協議格式封裝您的活動網址
-            const liffUrl = "https://liff.line.me/line-event/r/IEQ0TKIpPayB1SGH/xaqP6y";
+            const originalUrl = "https://event.line.me/r/IEQ0TKIpPayB1SGH/xaqP6y";
             
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            const isLine = /Line/i.test(userAgent);
+            // 嘗試檢測環境
+            const isLine = /Line/i.test(navigator.userAgent);
             
             if (isLine) {
-                // 如果在 LINE App 內開啟，直接在當前視窗跳轉至 LIFF URL
-                // 這會自動觸發 App 內部的原生活動頁面授權
-                window.location.href = liffUrl;
+                // 如果在 LINE 內，直接跳轉，讓 LINE 內部瀏覽器處理活動頁面
+                window.location.href = originalUrl;
             } else {
-                // 如果在外部瀏覽器（FB/Safari/Chrome），開啟新分頁
-                // LIFF URL 會提示使用者開啟 LINE App
-                window.open(liffUrl, '_blank');
+                // 如果在外部瀏覽器，開啟新分頁（使用者會需要手動登入 LINE）
+                window.open(originalUrl, '_blank');
             }
         }
 

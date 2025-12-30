@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 解決安卓與 iOS 瀏覽器高度不一致的問題 */
             --app-height: 100%;
         }
 
@@ -20,7 +19,6 @@
             padding: 0;
             overflow-x: hidden; 
             -webkit-tap-highlight-color: transparent;
-            /* 確保在 iOS 有平滑捲動，在 Android 防止拉伸 */
             overscroll-behavior-y: none;
         }
 
@@ -36,7 +34,6 @@
             box-sizing: border-box;
         }
 
-        /* 核心卡片容器：針對不同手機寬度優化 */
         .glass-card { 
             background: rgba(255, 255, 255, 0.9); 
             backdrop-filter: blur(12px); 
@@ -61,7 +58,6 @@
             outline: none;
         }
 
-        /* 安卓點擊效果優化 */
         .btn-option:active { 
             background: #333 !important; 
             color: #fff !important; 
@@ -84,7 +80,6 @@
         }
         .progress-fill { height: 100%; background: #333; transition: width 0.4s ease; }
 
-        /* 封面圖比例 */
         .img-display-straight { 
             width: 100%; 
             aspect-ratio: 3 / 4.5; 
@@ -95,19 +90,17 @@
             display: block; 
         }
         
-        /* 結果頁圖片比例與間距調整區塊 */
         .img-display { 
             width: 100%; 
             height: auto; 
-            aspect-ratio: 3 / 4; /* 修改：將比例調為 3:4，稍微變方一點點 */
+            aspect-ratio: 3 / 4; 
             background: #f0f0f0; 
             object-fit: cover; 
             border-radius: 16px; 
-            margin-bottom: 0.75rem; /* 修改：間距從 1.25rem 縮小至 0.75rem (12px) */
+            margin-bottom: 0.75rem; 
             display: block; 
         }
         
-        /* CTA 禮物盒區塊樣式 */
         .cta-reward-box {
             background: linear-gradient(135deg, #222 0%, #444 100%);
             border-radius: 20px;
@@ -126,7 +119,6 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(166, 139, 91, 0); }
         }
 
-        /* 針對小螢幕手機的極致優化 */
         @media (max-width: 360px) {
             .glass-card { padding: 1.25rem !important; }
             h1 { font-size: 1.15rem !important; }
@@ -197,9 +189,10 @@
                     感謝參與 UUIN 開春指引，<br>
                     我們為您準備了專屬的新年抽獎好禮。
                 </p>
-                <a href="https://event.line.me/r/IEQ0TKIpPayB1SGH/xaqP6y" target="_blank" class="block w-full bg-uuin-gold text-white py-3 rounded-full text-sm tracking-widest font-bold shadow-lg hover:brightness-110 active:scale-95 transition pulse-animation">
+                <!-- 修復點：點擊觸發 handleLineRedirect 函數而非直接寫死 URL -->
+                <button onclick="handleLineRedirect()" class="block w-full bg-uuin-gold text-white py-3 rounded-full text-sm tracking-widest font-bold shadow-lg hover:brightness-110 active:scale-95 transition pulse-animation">
                     立即領取 LINE 抽獎驚喜
-                </a>
+                </button>
             </div>
 
             <div class="text-left mb-6 px-1">
@@ -214,12 +207,32 @@
     </div>
 
     <script>
+        // 解決高度問題
         const setAppHeight = () => {
             const doc = document.documentElement;
             doc.style.setProperty('--app-height', `${window.innerHeight}px`);
         };
         window.addEventListener('resize', setAppHeight);
         setAppHeight();
+
+        // 核心：修復 LINE 跳轉登入問題的邏輯
+        function handleLineRedirect() {
+            // 任務頁原始 URL
+            const rawUrl = "https://event.line.me/r/IEQ0TKIpPayB1SGH/xaqP6y";
+            // 經過優化的 LIFF 跳轉連結 (針對任務牆頁面)
+            const liffUrl = "https://liff.line.me/line-event/r/IEQ0TKIpPayB1SGH/xaqP6y";
+            
+            // 偵測是否在 LINE 內建瀏覽器
+            const isLine = /Line/i.test(navigator.userAgent);
+            
+            if (isLine) {
+                // 如果在 LINE 內，使用原生跳轉協議避免二次登入
+                window.location.href = liffUrl;
+            } else {
+                // 如果在外部 (FB/IG/Safari)，使用 LIFF URL 嘗試喚起 LINE App
+                window.open(liffUrl, '_blank');
+            }
+        }
 
         const quizData = [
             { q: "🏮Q1. 大年初一，前往祕境茶屋走春。剛走進林間，天空卻下起細雨，而你手上「完全沒帶傘」。這時你會...？", options: [{ text: "快步前行，淋點小雨也是一種浪漫。", type: "A" }, { text: "走進轉角的獨立書店，等雨停再出發。", type: "B" }, { text: "停下腳步欣賞周圍風景。", type: "D" }, { text: "觀察四周，尋找附近可以借傘或買傘的小店。", type: "C" }] },

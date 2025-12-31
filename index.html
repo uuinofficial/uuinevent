@@ -119,7 +119,7 @@
             <h1 class="text-2xl font-bold leading-tight mb-6 text-center">探索你的 UUIN 生活風格！<br><span class="uuin-gold text-lg">開春新年指引</span></h1>
             <img src="https://live.staticflickr.com/65535/55002358596_5b8b28a566_c.jpg" class="img-main shadow-lg">
             <div class="text-center mb-8">
-                <p class="font-bold text-gray-800 text-base mb-1">完成測驗🎁領取新年穿搭及LINE抽獎驚喜。</p>
+                <p class="font-bold text-gray-800 text-base mb-1">完成測驗🎁<br>領取專屬穿搭及LINE抽獎驚喜。</p>
             </div>
             <button onclick="goToTransition()" class="w-full bg-black text-white py-4 rounded-full tracking-widest font-bold shadow-xl active:scale-95 transition-transform mt-auto">點我開始 ▸</button>
             <p class="text-[10px] text-gray-300 mt-6 uppercase tracking-widest">© UUIN Taiwan All Rights Reserved.</p>
@@ -186,13 +186,14 @@
                     <span class="text-white/40 text-[10px]">Limited</span>
                 </div>
                 <h4 class="text-base font-bold mb-2">恭喜完成測驗！🧧</h4>
-                <p class="text-xs text-gray-400 mb-5 leading-relaxed">感謝參與 UUIN 開春指引，我們為您準備了專屬的新年抽獎好禮。</p>
+                <p class="text-xs text-gray-400 mb-5 leading-relaxed">感謝參與UUIN開春指引，<br>我們為您準備了專屬的新年抽獎好禮。</p>
                 <button onclick="handleLineRedirect()" class="w-full bg-uuin-gold py-4 rounded-full text-sm font-bold tracking-[0.2em] shadow-lg pulse">
                     立即前往LINE抽獎
                 </button>
             </div>
 
-            <div class="w-full px-4 mb-10 text-center">
+            <!-- 新年祝福調整為靠左對齊 -->
+            <div class="w-full px-4 mb-10 text-left">
                 <h4 class="font-bold text-xs uuin-gold uppercase tracking-[0.2em] mb-2">新年祝福</h4>
                 <p id="result-wish" class="text-xs italic text-gray-500 leading-relaxed"></p>
             </div>
@@ -228,7 +229,7 @@
         function tryPlay() { if (!isPlaying) toggleMusic(); }
 
         const quizData = [
-            { q: "🏮Q1. 你正前往一座祕境茶屋，山間突然飄起輕盈細雨，而你手邊「正巧沒帶傘」。這時你會？", options: [{ text: "不減興致，感受雨水的涼意與浪漫。", type: "A" }, { text: "躲進附近的獨立書店，享受寧靜片刻。", type: "B" }, { text: "停下腳步，觀察雨滴在樹葉上的姿態。", type: "D" }, { text: "尋找附近是否有能避雨或借傘的小店。", type: "C" }] },
+            { q: "🏮Q1. 你正前往一座祕境茶屋，山間突然飄起輕盈細雨，而你「正巧沒帶傘」。這時你會？", options: [{ text: "不減興致，感受雨水的涼意與浪漫。", type: "A" }, { text: "躲進附近的獨立書店，享受寧靜片刻。", type: "B" }, { text: "停下腳步，觀察雨滴在樹葉上的姿態。", type: "D" }, { text: "尋找附近是否有能避雨或借傘的小店。", type: "C" }] },
             { q: "🏮Q2. 坐定後，你透過落地窗發現一間透著微光的玻璃工坊吸引，這時你會？", options: [{ text: "被玻璃工坊吸引，喝完茶後起身前往探索。", type: "A" }, { text: "拍下工坊門口，存入清單規劃下次造訪。", type: "D" }, { text: "先上網查詢工坊，搜尋背後的工藝故事。", type: "C" }, { text: "遠遠欣賞微光，繼續享受手邊溫熱的茶。", type: "B" }] },
             { q: "🏮Q3. 離開前，茶屋主人送你一個「新年盲盒」，憑直覺你會選擇？", options: [{ text: "幾何圖樣與撞色搭配的摩登設計。", type: "A" }, { text: "罩著輕透薄紗、觸感細膩的質感包裝。", type: "D" }, { text: "散發草本香的天然棉麻袋。", type: "B" }, { text: "溫潤工整的木造工藝外盒。", type: "C" }] },
             { q: "🏮Q4. 盲盒裡藏著一張「纖維手工卡」，邀你寫下新年願景，你會寫下？", options: [{ text: "明確的新年目標與實踐清單。", type: "C" }, { text: "一個神祕符號或對未來的視覺想像。", type: "D" }, { text: "一句充滿能量、展現自我期許的座右銘。", type: "A" }, { text: "平安、喜樂、自在，期許內在的鬆弛。", type: "B" }] },

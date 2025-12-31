@@ -7,21 +7,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --app-height: 100%; }
+        :root { --vh: 1vh; }
         html, body { height: 100%; width: 100%; margin: 0; padding: 0; overflow: hidden; background: #f8f9fa; }
         body { 
             font-family: 'Noto Sans TC', sans-serif; 
             -webkit-tap-highlight-color: transparent;
             -webkit-font-smoothing: antialiased;
             display: flex; align-items: center; justify-content: center;
+            height: calc(var(--vh) * 100);
         }
 
         .bg-gradient { 
             background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%); 
-            height: 100vh; height: -webkit-fill-available; width: 100vw;
+            width: 100vw;
             display: flex; align-items: center; justify-content: center;
             padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom) 16px;
             box-sizing: border-box;
+            height: 100%;
         }
 
         .glass-card { 
@@ -30,14 +32,22 @@
             border: 1px solid rgba(255, 255, 255, 0.4); 
             border-radius: 28px; 
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); 
-            width: 100%; max-width: 414px; height: 100%; max-height: 720px; 
+            width: 100%; max-width: 414px; 
+            height: 100%; max-height: 720px; 
             position: relative; overflow: hidden; display: flex; flex-direction: column;
         }
 
-        .scroll-container { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 30px; }
-        .scroll-container::-webkit-scrollbar { display: none; }
+        /* 統一所有分頁容器的樣式 */
+        .page-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 2rem 1.75rem;
+        }
+        .page-container::-webkit-scrollbar { display: none; }
 
-        /* 過場頁 */
         .transition-bg-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://live.staticflickr.com/65535/55015045643_c8ea6f3593_h.jpg');
@@ -46,7 +56,7 @@
         .transition-content {
             position: relative; z-index: 2; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; padding: 0 30px; text-align: center;
+            color: white; text-align: center;
         }
 
         .music-toggle {
@@ -54,29 +64,37 @@
             width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.3);
             display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
         }
         .music-toggle.playing { animation: rotate 5s linear infinite; }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .btn-option { 
             transition: all 0.2s ease; border: 1px solid #eee; background: #fff; 
-            width: 100%; text-align: left; padding: 16px 20px; border-radius: 18px;
-            font-size: 14px; color: #444; margin-bottom: 12px; line-height: 1.4;
+            width: 100%; text-align: left; padding: 14px 18px; border-radius: 18px;
+            font-size: 14px; color: #444; margin-bottom: 10px; line-height: 1.5;
         }
         .btn-option:active { background: #111 !important; color: #fff !important; transform: scale(0.97); }
 
         .uuin-gold { color: #a68b5b; }
         .bg-uuin-gold { background: #a68b5b; }
-        .progress-bar { height: 4px; background: #f0f0f0; width: 100%; border-radius: 10px; margin-bottom: 24px; overflow: hidden; }
+        .progress-bar { height: 4px; background: #f0f0f0; width: 100%; border-radius: 10px; margin-bottom: 20px; flex-shrink: 0; overflow: hidden; }
         .progress-fill { height: 100%; background: #222; transition: width 0.5s ease; }
-        .img-main { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 20px; margin-bottom: 20px; }
-        .img-result { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 20px; margin-bottom: 20px; }
+        
+        .img-main { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 20px; margin-bottom: 1.5rem; }
+        .img-result { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 20px; margin-bottom: 1.5rem; }
         
         .cta-box { background: #1a1a1a; border-radius: 24px; padding: 24px; color: white; width: 100%; }
         .pulse { animation: pulse-effect 2s infinite; }
         @keyframes pulse-effect { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
         .fade-in { animation: fadeInEffect 0.8s ease forwards; }
         @keyframes fadeInEffect { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        #question-text {
+            word-break: keep-all;
+            overflow-wrap: break-word;
+            max-width: 100%;
+        }
     </style>
 </head>
 <body class="bg-gradient">
@@ -85,6 +103,7 @@
     </audio>
 
     <div id="quiz-container" class="glass-card">
+        <!-- 音樂控制 -->
         <div id="musicBtn" class="music-toggle" onclick="toggleMusic()">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                 <path d="M9 18V5l12-2v13"></path>
@@ -95,21 +114,21 @@
         </div>
 
         <!-- 首頁 -->
-        <div id="start-page" class="scroll-container px-7 py-8 flex flex-col items-center">
+        <div id="start-page" class="page-container items-center">
             <h2 class="text-[10px] tracking-[0.3em] text-gray-400 mb-2 uppercase">UUIN Lifestyle Quiz</h2>
             <h1 class="text-2xl font-bold leading-tight mb-6 text-center">探索你的 UUIN 生活風格！<br><span class="uuin-gold text-lg">開春新年指引</span></h1>
             <img src="https://live.staticflickr.com/65535/55002358596_5b8b28a566_c.jpg" class="img-main shadow-lg">
             <div class="text-center mb-8">
                 <p class="font-bold text-gray-800 text-base mb-1">完成測驗🎁領取新年穿搭及LINE抽獎驚喜。</p>
             </div>
-            <button onclick="goToTransition()" class="w-full bg-black text-white py-4 rounded-full tracking-widest font-bold shadow-xl active:scale-95 transition-transform">點我開始 ▸</button>
-            <p class="text-[10px] text-gray-300 mt-10 uppercase tracking-widest">© UUIN Taiwan All Rights Reserved.</p>
+            <button onclick="goToTransition()" class="w-full bg-black text-white py-4 rounded-full tracking-widest font-bold shadow-xl active:scale-95 transition-transform mt-auto">點我開始 ▸</button>
+            <p class="text-[10px] text-gray-300 mt-6 uppercase tracking-widest">© UUIN Taiwan All Rights Reserved.</p>
         </div>
 
         <!-- 過場頁 -->
         <div id="transition-page" class="hidden h-full relative">
             <div class="transition-bg-overlay"></div>
-            <div class="transition-content fade-in">
+            <div class="transition-content fade-in px-7">
                 <h2 class="text-[10px] tracking-[0.4em] text-white/50 mb-8 uppercase text-center">The Journey Begins</h2>
                 <div class="space-y-6 mb-12">
                     <h1 class="text-2xl font-bold">大年初一，準備出發走春</h1>
@@ -119,7 +138,7 @@
                         一段關於風格與感官的旅程即將展開。
                     </p>
                     <p class="text-xs text-white/50 tracking-wider leading-loose">
-                        請聽從內心的直覺與渴望，選擇最適合的答案。<br>準備好進入探險了嗎？
+                        請聽從內心的直覺與渴望，選擇最適合的答案。
                     </p>
                 </div>
                 <button onclick="startQuiz()" class="w-48 border border-white/40 bg-white/10 backdrop-blur-md text-white py-4 rounded-full text-sm font-bold tracking-widest active:bg-white active:text-black transition-all">
@@ -129,17 +148,17 @@
         </div>
 
         <!-- 題目頁 -->
-        <div id="question-page" class="hidden scroll-container px-7 py-8">
+        <div id="question-page" class="hidden page-container">
             <div class="progress-bar"><div id="progress-fill" class="progress-fill" style="width: 0%;"></div></div>
-            <div id="question-content" class="fade-in">
+            <div id="question-content" class="fade-in flex flex-col h-full">
                 <h3 id="question-number" class="text-[10px] text-gray-400 mb-3 tracking-widest font-bold uppercase">STEP 1 / 5</h3>
                 <h2 id="question-text" class="text-lg font-bold mb-8 leading-snug text-gray-800"></h2>
-                <div id="options-container"></div>
+                <div id="options-container" class="flex flex-col"></div>
             </div>
         </div>
 
-        <!-- 結果頁 (恢復原始設計) -->
-        <div id="result-page" class="hidden scroll-container px-7 py-8 flex flex-col items-center">
+        <!-- 結果頁 -->
+        <div id="result-page" class="hidden page-container items-center">
             <h2 class="text-[10px] tracking-[0.2em] text-gray-400 mb-2 uppercase">Your Aesthetic Soul</h2>
             <h1 id="result-title" class="text-2xl font-bold mb-1"></h1>
             <h3 id="result-subtitle" class="text-xs text-gray-400 italic mb-6 uppercase tracking-widest"></h3>
@@ -167,22 +186,30 @@
                     <span class="text-white/40 text-[10px]">Limited</span>
                 </div>
                 <h4 class="text-base font-bold mb-2">恭喜完成測驗！🧧</h4>
-                <p class="text-xs text-gray-400 mb-5 leading-relaxed">感謝參與 UUIN 開春指引，<br>我們為您準備了專屬的新年抽獎好禮。</p>
+                <p class="text-xs text-gray-400 mb-5 leading-relaxed">感謝參與 UUIN 開春指引，我們為您準備了專屬的新年抽獎好禮。</p>
                 <button onclick="handleLineRedirect()" class="w-full bg-uuin-gold py-4 rounded-full text-sm font-bold tracking-[0.2em] shadow-lg pulse">
                     立即前往LINE抽獎
                 </button>
             </div>
 
-            <div class="w-full px-4 mb-10">
+            <div class="w-full px-4 mb-10 text-center">
                 <h4 class="font-bold text-xs uuin-gold uppercase tracking-[0.2em] mb-2">新年祝福</h4>
                 <p id="result-wish" class="text-xs italic text-gray-500 leading-relaxed"></p>
             </div>
 
-            <button onclick="location.reload()" class="text-[11px] text-gray-300 font-bold uppercase tracking-widest mb-4">↺ 重新測驗</button>
+            <button onclick="location.reload()" class="text-[11px] text-gray-300 font-bold uppercase tracking-widest mb-10">↺ 重新測驗</button>
         </div>
     </div>
 
     <script>
+        // 修正移動端 100vh 問題
+        function setFullHeight() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        window.addEventListener('resize', setFullHeight);
+        setFullHeight();
+
         const bgMusic = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         const muteLine = document.getElementById('muteLine');
@@ -197,13 +224,14 @@
             isPlaying = !isPlaying;
         }
 
+        // 初始化播放
         function tryPlay() { if (!isPlaying) toggleMusic(); }
 
         const quizData = [
-            { q: "🏮Q1. 你正前往一座祕境茶屋，山間突然飄起輕盈細雨，而你手邊「正巧沒帶傘」。<br>這時你會？", options: [{ text: "不減興致，感受雨水的涼意與浪漫。", type: "A" }, { text: "躲進附近的獨立書店，享受寧靜片刻。", type: "B" }, { text: "停下腳步，觀察雨滴在樹葉上的姿態。", type: "D" }, { text: "尋找附近是否有能避雨或借傘的小店。", type: "C" }] },
+            { q: "🏮Q1. 你正前往一座祕境茶屋，山間突然飄起輕盈細雨，而你手邊「正巧沒帶傘」。這時你會？", options: [{ text: "不減興致，感受雨水的涼意與浪漫。", type: "A" }, { text: "躲進附近的獨立書店，享受寧靜片刻。", type: "B" }, { text: "停下腳步，觀察雨滴在樹葉上的姿態。", type: "D" }, { text: "尋找附近是否有能避雨或借傘的小店。", type: "C" }] },
             { q: "🏮Q2. 坐定後，你透過落地窗發現一間透著微光的玻璃工坊吸引，這時你會？", options: [{ text: "被玻璃工坊吸引，喝完茶後起身前往探索。", type: "A" }, { text: "拍下工坊門口，存入清單規劃下次造訪。", type: "D" }, { text: "先上網查詢工坊，搜尋背後的工藝故事。", type: "C" }, { text: "遠遠欣賞微光，繼續享受手邊溫熱的茶。", type: "B" }] },
-            { q: "🏮Q3. 離開前，茶屋主人送你一個<br>「新年盲盒」，憑直覺你會選擇？", options: [{ text: "幾何圖樣與撞色搭配的摩登設計。", type: "A" }, { text: "罩著輕透薄紗、觸感細膩的質感包裝。", type: "D" }, { text: "散發草本香的天然棉麻袋。", type: "B" }, { text: "溫潤工整的木造工藝外盒。", type: "C" }] },
-            { q: "🏮Q4. 盲盒裡藏著一張「纖維手工卡」，<br>邀你寫下新年願景，你會寫下？", options: [{ text: "明確的新年目標與實踐清單。", type: "C" }, { text: "一個神祕符號或對未來的視覺想像。", type: "D" }, { text: "一句充滿能量、展現自我期許的座右銘。", type: "A" }, { text: "平安、喜樂、自在，期許內在的鬆弛。", type: "B" }] },
+            { q: "🏮Q3. 離開前，茶屋主人送你一個「新年盲盒」，憑直覺你會選擇？", options: [{ text: "幾何圖樣與撞色搭配的摩登設計。", type: "A" }, { text: "罩著輕透薄紗、觸感細膩的質感包裝。", type: "D" }, { text: "散發草本香的天然棉麻袋。", type: "B" }, { text: "溫潤工整的木造工藝外盒。", type: "C" }] },
+            { q: "🏮Q4. 盲盒裡藏著一張「纖維手工卡」，邀你寫下新年願景，你會寫下？", options: [{ text: "明確的新年目標與實踐清單。", type: "C" }, { text: "一個神祕符號或對未來的視覺想像。", type: "D" }, { text: "一句充滿能量、展現自我期許的座右銘。", type: "A" }, { text: "平安、喜樂、自在，期許內在的鬆弛。", type: "B" }] },
             { q: "🏮Q5. 旅程結束回到家，最讓你感到心滿意足的瞬間是？", options: [{ text: "在社群分享美好的穿搭與午茶時光。", type: "A" }, { text: "在山林間找回久違的平靜與舒壓感。", type: "B" }, { text: "挖掘到工藝背後的深度故事與職人精神。", type: "C" }, { text: "意外發現的玻璃工坊，激發了你的美學想像。", type: "D" }] }
         ];
 
@@ -222,7 +250,7 @@
         function showQuestion() {
             const data = quizData[currentStep];
             document.getElementById('question-number').innerText = `STEP ${currentStep + 1} / 5`;
-            document.getElementById('question-text').innerHTML = data.q;
+            document.getElementById('question-text').innerText = data.q;
             document.getElementById('progress-fill').style.width = `${((currentStep) / 5) * 100}%`;
             const container = document.getElementById('options-container');
             container.innerHTML = '';
@@ -230,7 +258,12 @@
                 const btn = document.createElement('button');
                 btn.className = "btn-option shadow-sm";
                 btn.innerText = opt.text;
-                btn.onclick = () => { scores[opt.type]++; currentStep++; if (currentStep < 5) showQuestion(); else showResult(); };
+                btn.onclick = () => { 
+                    scores[opt.type]++; 
+                    currentStep++; 
+                    if (currentStep < 5) showQuestion(); 
+                    else showResult(); 
+                };
                 container.appendChild(btn);
             });
         }
